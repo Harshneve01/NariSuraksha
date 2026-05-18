@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-4">
+
+        <div class="card p-4 shadow">
+            <h3 class="text-center mb-3">Register</h3>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- Username -->
+                <input type="text" name="username" class="form-control mb-3" placeholder="Username" required>
+
+                <!-- Password -->
+                <input type="password" name="password" class="form-control mb-3" placeholder="Password" required>
+
+                <!-- Role -->
+                <select name="role" class="form-control mb-3" required>
+                    <option value="">Select Role</option>
+                    <option value="user">User</option>
+                    <option value="police">Police</option>
+                    <option value="admin">Admin</option>
+                </select>
+
+                <!-- ✅ Terms & Conditions -->
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" name="terms" id="terms">
+                    <label class="form-check-label" for="terms">
+                        I agree to 
+                        <a href="{% url 'policy' %}" target="_blank">
+                            Terms & Conditions
+                        </a>
+                    </label>
+                </div>
+
+                <!-- Submit -->
+                <button class="btn btn-success w-100">Register</button>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

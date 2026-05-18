@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3 class="mb-3">User Dashboard</h3>
+
+<div class="row">
+
+    <!-- CONTACTS -->
+    <div class="col-md-6">
+        <div class="card p-3 shadow">
+            <h5>Contacts</h5>
+
+            <ul>
+                {% for c in contacts %}
+                    <li>{{ c.name }} ({{ c.phone }})</li>
+                {% empty %}
+                    <li>No contacts added</li>
+                {% endfor %}
+            </ul>
+
+            <a href="{% url 'add_contact' %}" class="btn btn-primary btn-sm">
+                Add Contact
+            </a>
+        </div>
+    </div>
+
+    <!-- ALERTS -->
+    <div class="col-md-6">
+        <div class="card p-3 shadow">
+            <h5>Your Alerts</h5>
+
+            <table class="table">
+                <tr>
+                    <th>Status</th>
+                    <th>Time</th>
+                </tr>
+
+                {% for a in alerts %}
+                <tr>
+                    <td>
+                        {% if a.status == 'pending' %}
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        {% elif a.status == 'accepted' %}
+                            <span class="badge bg-success">Accepted</span>
+                        {% else %}
+                            <span class="badge bg-danger">Rejected</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ a.created_at }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2">No alerts yet</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- 📍 LIVE LOCATION PREVIEW -->
+<div class="mt-3">
+    <p id="locationPreview" style="font-size:13px;color:gray;">
+        Detecting your location...
+    </p>
+</div>
+
+<!-- 🔊 SOUND ALERT -->
+<audio id="sosSound" src="https://www.soundjay.com/buttons/sounds/beep-07.mp3"></audio>
+
+<!-- 🚨 SOS BUTTON -->
+<form id="sosForm" method="post" action="{% url 'sos' %}">
+    {% csrf_token %}
+
+    <input type="hidden" name="latitude" id="lat">
+    <input type="hidden" name="longitude" id="lon">
+
+    <button type="button" onclick="confirmSOS()" class="btn-sos">
+        🚨
+    </button>
+</form>
+
+<script>
+// 📍 Get Live Location
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        document.getElementById("lat").value = position.coords.latitude;
+        document.getElementById("lon").value = position.coords.longitude;
+
+        document.getElementById("locationPreview").innerHTML =
+            "📍 Lat: " + position.coords.latitude +
+            " | Lon: " + position.coords.longitude;
+    }, function() {
+        document.getElementById("locationPreview").innerHTML =
+            "❌ Location access denied";
+    });
+}
+
+// 🚨 Confirm SOS + Sound
+function confirmSOS() {
+    let confirmAction = confirm("⚠️ Share your live location with police?\n\nThis will send your current location.");
+
+    if (confirmAction) {
+        // 🔊 play sound
+        document.getElementById("sosSound").play();
+
+        // submit form
+        document.getElementById("sosForm").submit();
+    }
+}
+</script>
+
+{% endblock %}

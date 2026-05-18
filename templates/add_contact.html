@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="add-contact-card">
+
+    <h3 class="add-contact-title">📞 Add Emergency Contact</h3>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <input type="text" name="name" class="form-control mb-3" placeholder="Contact Name">
+
+        <input type="text" name="phone" class="form-control mb-3" placeholder="Phone Number">
+
+        <input type="email" name="email" class="form-control mb-3" placeholder="Email (optional)">
+
+        <button class="btn btn-primary w-100 add-contact-btn">
+            Save Contact
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

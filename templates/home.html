@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- 🔥 DYNAMIC NEWS SLIDER -->
+<div class="news-slider">
+    <div class="news-track">
+        {% for n in news %}
+            {{ n.title }} 
+        {% empty %}
+            No updates available
+        {% endfor %}
+    </div>
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero text-center">
+    <div class="container">
+        <h1 class="hero-title fade-in">🚨 NariSuraksha</h1>
+        <p class="hero-subtitle fade-in-delay">
+            Smart Women Safety System with Instant SOS & Live Tracking
+        </p>
+
+        <div class="mt-4 fade-in-delay2">
+            <a href="{% url 'login' %}" class="btn btn-light btn-lg me-3">Login</a>
+            <a href="{% url 'register' %}" class="btn btn-outline-light btn-lg">Register</a>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="container mt-5">
+    <div class="row text-center">
+
+        <div class="col-md-4 fade-up">
+            <div class="glass-card">
+                <h3>🚨 SOS Alert</h3>
+                <p>Send emergency alert instantly with one tap.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 fade-up">
+            <div class="glass-card">
+                <h3>📍 Live Location</h3>
+                <p>Share accurate GPS location with authorities.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 fade-up">
+            <div class="glass-card">
+                <h3>🚓 Police Response</h3>
+                <p>Quick action from police for your safety and check alert.
+                    
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="container mt-5">
+    <h2 class="text-center mb-4 fade-in">How It Works</h2>
+
+    <div class="row text-center">
+
+        <div class="col-md-4 fade-up">
+            <div class="card p-3 shadow-sm">
+                <h5>1️⃣ Register</h5>
+                <p>Create your account and add emergency contacts.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 fade-up">
+            <div class="card p-3 shadow-sm">
+                <h5>2️⃣ Press SOS</h5>
+                <p>Click SOS button to send alert with your location.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 fade-up">
+            <div class="card p-3 shadow-sm">
+                <h5>3️⃣ Get Help</h5>
+                <p>Police receives alert and responds immediately.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta text-center mt-5 fade-in">
+    <h2>Stay Safe. Stay Connected.</h2>
+    <p>Your safety is our priority.</p>
+
+    <a href="{% url 'register' %}" class="btn btn-danger btn-lg mt-3">
+        Get Started 
+    </a>
+</section>
+
+{% endblock %}
