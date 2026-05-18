@@ -1,0 +1,1 @@
+web: gunicorn narisuraksha1.wsgi
